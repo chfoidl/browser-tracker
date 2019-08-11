@@ -1,0 +1,34 @@
+{
+  "name": "browser-tracker",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "license": "GPL-3.0-or-later",
+  "author": "ChrisXF",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.0-beta2",
+    "request": "^2.88.0",
+    "saslprep": "^1.0.3",
+    "table": "^5.4.5",
+    "useragent": "^2.3.0",
+    "yamlparser": "^0.0.2"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.1",
+    "@types/express": "^4.17.0",
+    "@types/mongodb": "^3.1.32",
+    "@types/node": "^12.7.1",
+    "@types/table": "^4.0.6",
+    "@types/useragent": "^2.1.1",
+    "parcel-bundler": "^1.12.3",
+    "typescript": "^3.5.3"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "scripts": {
+    "build": "parcel build src/index.ts --target=node --no-source-maps",
+    "watch": "parcel watch src/index.ts --target=node --no-source-maps"
+  }
+}
