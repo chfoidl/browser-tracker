@@ -6,8 +6,8 @@ const readFile = promisify(fs.readFile);
 export const getEnvOrSecret = async (envName: string) => {
     const env = process.env[envName];
 
-    if (!env) {
-        return null;
+    if (env) {
+        return env;
     }
 
     if (envName.endsWith('_FILE')) {
@@ -22,5 +22,5 @@ export const getEnvOrSecret = async (envName: string) => {
         }
     }
 
-    return env;
+    return null;
 };
