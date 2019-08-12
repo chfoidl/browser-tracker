@@ -10,13 +10,14 @@ export const getEnvOrSecret = async (envName: string) => {
         return env;
     }
 
-    if (envName.endsWith('_FILE')) {
+    const secret = process.env[envName + '_FILE'];
+    if (secret) {
         try {
-            const content = await readFile(env);
+            const content = await readFile(secret);
 
             return content.toString();
         } catch (e) {
-            console.error('Could not read secret at: ' + env);
+            console.error('Could not read secret at: ' + secret);
 
             process.exit(1);
         }
