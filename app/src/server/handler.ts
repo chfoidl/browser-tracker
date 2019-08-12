@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import useragent from 'useragent';
+import {ObjectID} from 'mongodb';
 import {getTinyImageSource} from './response';
 import { Client, Request as IRequest } from '../db/models';
 import {saveClient, saveRequest} from '../db';
@@ -36,16 +37,15 @@ export const handleRequest = async (req: Request, res: Response) => {
 
         const btId = req.cookies[COOKIE_NAME] as string;
         if (btId && btId.length === 24) {
-            client._id = btId;
+            client._id = ObjectID(btId);
         }
 
         const persistedClient = await saveClient(client);
 
         if (persistedClient) {
-            res.cookie(COOKIE_NAME, persistedClient._id, {
+            res.cookie(COOKIE_NAME, persistedClient._id.toString(), {
                 expires: new Date(Date.now() + 3155692600000),
-                httpOnly: true,
-                sameSite: 'lax'
+                httpOnly: true
             })
 
             const request: IRequest = {

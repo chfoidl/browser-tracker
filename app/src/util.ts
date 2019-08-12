@@ -15,7 +15,7 @@ export const getEnvOrSecret = async (envName: string) => {
         try {
             const content = await readFile(secret);
 
-            return content.toString();
+            return content.toString().trim();
         } catch (e) {
             console.error('Could not read secret at: ' + secret);
 

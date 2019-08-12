@@ -1,5 +1,5 @@
 import {getConfig} from '../boot';
-import {MongoClient, Db, MongoError} from 'mongodb';
+import {MongoClient, Db, ObjectID} from 'mongodb';
 import {Client, Request} from './models';
 
 let client: MongoClient = null;
@@ -29,20 +29,21 @@ export const closeDatabase = () => new Promise(resolve => {
 export const saveClient = async (client: Client) => {
     const clientCollection = db.collection('clients');
 
-    try {
-        const result = await clientCollection.insertOne(client);
+    if (client._id) {
+        const existingClient = clientCollection.findOne({ '_id': ObjectID(client._id) });
 
-        if (result) {
-            return result.ops[0] as Client;
-        };
-    } catch (e) {
-        // Catch duplicate key error
-        if (e.name === 'MongoError' && e.code === 11000) {
-            return client;
+        if (existingClient) {
+            return existingClient;
+        } else {
+            delete client._id;
         }
-
-        console.error(e);
     }
+
+    const result = await clientCollection.insertOne(client);
+
+    if (result) {
+        return result.ops[0] as Client;
+    };
 
     return null;
 };
