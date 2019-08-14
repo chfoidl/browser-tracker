@@ -15,5 +15,6 @@ export interface Client {
 export interface Request {
     _id?: string;
     clientId: string;
+    referer: string;
     time: Date;
 };

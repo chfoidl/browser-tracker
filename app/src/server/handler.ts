@@ -50,6 +50,7 @@ export const handleRequest = async (req: Request, res: Response) => {
 
             const request: IRequest = {
                 clientId: persistedClient._id,
+                referer: req.header('Referer') || '',
                 time: new Date()
             };
 
